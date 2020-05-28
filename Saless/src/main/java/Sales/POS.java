@@ -28,6 +28,8 @@ public class POS extends javax.swing.JFrame {
         initComponents();
     }
     
+    
+    
     Connection con;
     PreparedStatement pst;
     
@@ -63,11 +65,13 @@ public class POS extends javax.swing.JFrame {
         txtPay = new javax.swing.JTextField();
         txtBalance = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        paymentcombo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtBill = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        saleshomebttn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -216,10 +220,26 @@ public class POS extends javax.swing.JFrame {
             }
         });
 
+        paymentcombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Please Select Payment Type ---", "Cash", "Credit", "Debit", " " }));
+        paymentcombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentcomboActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblInvoice)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,17 +254,9 @@ public class POS extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(paymentcombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(137, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblInvoice)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +277,9 @@ public class POS extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBalance)
                     .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(paymentcombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -296,22 +310,32 @@ public class POS extends javax.swing.JFrame {
 
         jLabel1.setText("Sale Summary");
 
+        saleshomebttn.setText("Home");
+        saleshomebttn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saleshomebttnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                    .addComponent(saleshomebttn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,7 +352,9 @@ public class POS extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(48, 48, 48))
+                .addGap(14, 14, 14)
+                .addComponent(saleshomebttn)
+                .addContainerGap())
         );
 
         pack();
@@ -355,13 +381,14 @@ public class POS extends javax.swing.JFrame {
         String total = txtTotal.getText();
         String pay = txtPay.getText();
         String bal = txtBalance.getText();
+        String payment = (String) paymentcombo.getSelectedItem();
         
         DefaultTableModel model = new DefaultTableModel();
         
         model = (DefaultTableModel)jTable1.getModel();
         
         txtBill.setText(txtBill.getText() + "*********************************************\n");
-        txtBill.setText(txtBill.getText() + "*            POSBILL                        *\n");
+        txtBill.setText(txtBill.getText() + "*            POS BILL                        *\n");
         txtBill.setText(txtBill.getText() + "*********************************************\n");
         
         //Heading
@@ -382,9 +409,10 @@ public class POS extends javax.swing.JFrame {
                 txtBill.setText(txtBill.getText() + "\n");
                 
                 
-                txtBill.setText(txtBill.getText() + "\t" + "\t" + "Total:" + "\t" + total + "\n");
-                txtBill.setText(txtBill.getText() + "\t" + "\t" + "Pay:" + "\t" + pay + "\n");
-                txtBill.setText(txtBill.getText() + "\t" + "\t" + "Balance: "  + bal + "\n");
+                txtBill.setText(txtBill.getText() + "Total:" + "\t" + total + "\n");
+                txtBill.setText(txtBill.getText() + "Pay:" + "\t" + pay + "\n");
+                txtBill.setText(txtBill.getText() + "Balance: "  + bal + "\n");
+                txtBill.setText(txtBill.getText() + "\t" + "\t" + "Payment\n\t\tType: "+ payment +"\t");
                 txtBill.setText(txtBill.getText() + "\n");
                 txtBill.setText(txtBill.getText() + "*********************************************\n");
                 txtBill.setText(txtBill.getText() + "*            THANKYOU!!                     *\n");
@@ -493,6 +521,18 @@ public class POS extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void saleshomebttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleshomebttnActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Welcome obj4 = new Welcome();
+        obj4.setVisible(true);
+        
+    }//GEN-LAST:event_saleshomebttnActionPerformed
+
+    private void paymentcomboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentcomboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paymentcomboActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -546,6 +586,8 @@ public class POS extends javax.swing.JFrame {
     private javax.swing.JLabel lblQty;
     private javax.swing.JLabel lblSubtotal;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JComboBox<String> paymentcombo;
+    private javax.swing.JButton saleshomebttn;
     private javax.swing.JTextField txtBalance;
     private javax.swing.JTextArea txtBill;
     private javax.swing.JTextField txtInvoice;

@@ -413,6 +413,7 @@ public class POS extends javax.swing.JFrame {
         txtBill.setText(txtBill.getText() + "*********************************************\n");
         
         //Heading
+        txtBill.setText(txtBill.getText() + "Date:" + "\t" + date + "\n");
         txtBill.setText(txtBill.getText() + "Product" + "\t" + "Price" + "\t"+ "Sub Total" + "\n" );
         
         for (int i = 0; i < model.getRowCount(); i++)
@@ -430,7 +431,6 @@ public class POS extends javax.swing.JFrame {
                 txtBill.setText(txtBill.getText() + "\n");
                 
                 
-                txtBill.setText(txtBill.getText() + "Date:" + "\t" + date + "\n");
                 txtBill.setText(txtBill.getText() + "Total:" + "\t" + total + "\n");
                 txtBill.setText(txtBill.getText() + "Pay:" + "\t" + pay + "\n");
                 txtBill.setText(txtBill.getText() + "Balance: "  + bal + "\n");

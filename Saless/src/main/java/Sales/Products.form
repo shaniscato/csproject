@@ -85,7 +85,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="addButton" min="-2" pref="168" max="-2" attributes="0"/>
+                          <Component id="addProduct" min="-2" pref="168" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="P_Cancel" min="-2" pref="168" max="-2" attributes="0"/>
                       </Group>
@@ -136,7 +136,7 @@
                   </Group>
                   <EmptySpace pref="79" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="addButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="addProduct" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="P_Cancel" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -210,7 +210,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="addButton">
+        <Component class="javax.swing.JButton" name="addProduct">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Calibri Light" size="22" style="0"/>
@@ -218,7 +218,7 @@
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addProductActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="P_Cancel">

@@ -14,6 +14,7 @@ public class Welcome extends javax.swing.JFrame {
     /**
      * Creates new form Welcome
      */
+    //Displays welcome screen
     public Welcome() {
         initComponents();
     }
@@ -29,8 +30,8 @@ public class Welcome extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         salesReport = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        productsScreen = new javax.swing.JButton();
+        salesScreen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,17 +45,17 @@ public class Welcome extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Products");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        productsScreen.setText("Products");
+        productsScreen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                productsScreenActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Sales");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        salesScreen.setText("Sales");
+        salesScreen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                salesScreenActionPerformed(evt);
             }
         });
 
@@ -64,9 +65,9 @@ public class Welcome extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(productsScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(salesScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(salesReport, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
@@ -77,8 +78,8 @@ public class Welcome extends javax.swing.JFrame {
                 .addContainerGap(136, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salesReport, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(productsScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salesScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(97, 97, 97))
         );
 
@@ -102,7 +103,7 @@ public class Welcome extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void productsScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsScreenActionPerformed
         // TODO add your handling code here:
         this.dispose();
         Products obj = new Products();
@@ -110,7 +111,7 @@ public class Welcome extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_productsScreenActionPerformed
 
     private void salesReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesReportActionPerformed
         // TODO add your handling code here: 
@@ -119,12 +120,12 @@ public class Welcome extends javax.swing.JFrame {
         salereport.setVisible(true);
     }//GEN-LAST:event_salesReportActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void salesScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesScreenActionPerformed
         // TODO add your handling code here:
         this.dispose();
         POS obj2 = new POS();
         obj2.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_salesScreenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,9 +163,9 @@ public class Welcome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton productsScreen;
     private javax.swing.JButton salesReport;
+    private javax.swing.JButton salesScreen;
     // End of variables declaration//GEN-END:variables
 }

@@ -40,6 +40,7 @@ public class Products extends javax.swing.JFrame {
         initComponents();
         showTable();
     }
+    //Creates Product Object
     public Products(int prodID, String prodname, double unit, int onhand){
         initComponents();
         showTable();
@@ -48,6 +49,7 @@ public class Products extends javax.swing.JFrame {
         this.unit = unit;
         this.onhand = onhand;
     }
+    //Getters for product variables
     public int getProdID(){return prodID;}
     public String getProdName(){return prodname;}
     public double getUnitPrice(){return unit;}
@@ -55,23 +57,7 @@ public class Products extends javax.swing.JFrame {
     
     
     
-    /*private static class productdetails {
-        private static int prodID;
-        private static String prodname;
-        private static double unit;
-        private static int onhand;
-        public productdetails(int prodID, String prodname, double unit, int onhand)
-        {
-            this.prodID = prodID;
-            this.prodname = prodname;
-            this.unit = unit;
-            this.onhand = onhand;
-        }
-        public int getProdID(){return this.prodID;}
-        public String getProdName(){return this.prodname;}
-        public double getUnitPrice(){return this.unit;}
-        public int getOnHand(){return this.onhand;}
-    }*/
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,7 +74,7 @@ public class Products extends javax.swing.JFrame {
         txtpname = new javax.swing.JTextField();
         lblUnitprice = new javax.swing.JLabel();
         txtunitprice = new javax.swing.JTextField();
-        addButton = new javax.swing.JButton();
+        addProduct = new javax.swing.JButton();
         P_Cancel = new javax.swing.JButton();
         txtonhand = new javax.swing.JTextField();
         lblonhand = new javax.swing.JLabel();
@@ -141,11 +127,11 @@ public class Products extends javax.swing.JFrame {
 
         txtunitprice.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        addButton.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        addButton.setText("Add");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        addProduct.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        addProduct.setText("Add");
+        addProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                addProductActionPerformed(evt);
             }
         });
 
@@ -171,7 +157,7 @@ public class Products extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(P_Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -211,7 +197,7 @@ public class Products extends javax.swing.JFrame {
                     .addComponent(txtonhand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(P_Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -351,8 +337,8 @@ public class Products extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_txtpidActionPerformed
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    //Adds new product to table display in Products Screen
+    private void addProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductActionPerformed
         // TODO add your handling code here:
         model = new DefaultTableModel();
         model = (DefaultTableModel)jTable1.getModel();
@@ -369,10 +355,8 @@ public class Products extends javax.swing.JFrame {
         }
         
         
-        
-        
-    }//GEN-LAST:event_addButtonActionPerformed
-
+    }//GEN-LAST:event_addProductActionPerformed
+    //To insert new product to products table in database
     private void P_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_P_saveActionPerformed
         // TODO add your handling code here:
         if(txtpid.getText().isEmpty()){
@@ -386,26 +370,32 @@ public class Products extends javax.swing.JFrame {
         }
         else {
             try{
+                //checkData done to see if product is already in the database
+                //If found, checkdata fills in the found info
                 checkData cd = new checkData();
                 cd.start();
+                //creates a new data access object (DAO)
                 POSDAO posDAO1 = new POSDAO();
-                
+                //connect to database
                 if(posDAO1.openConnection())
                 {
+                    //Takes info in textbox and saves them to product varaibles
                     prodID = Integer.valueOf(txtpid.getText());
                     prodname = txtpname.getText();
                     unit = Double.valueOf(txtunitprice.getText());
                     onhand = Integer.valueOf(txtonhand.getText());
+                    //creates new product object
                     Products product = new Products(prodID, prodname, unit, onhand);
-                    
+                    //If checkData finds info, the button asks to 'Update', if not it asks to 'Save'
                     if (P_save.getText()=="Save")
                     {
-                        
+                        //Calls POSDAO insert product function and displays confirmation box
                         posDAO1.insertProductRecord(product);
                         JOptionPane.showMessageDialog(jPanel1,"--New Product Added--"+"\nProduct Code: "+ prodID+"\nProduct Name: "+prodname+"\nUnit Price: "+unit+"\nOnhand: "+onhand);
                         showTable();
                     }
                     else{
+                        //Calls POSDAO update product function and displays confirmation box
                         posDAO1.updateProductRecord(product);
                         JOptionPane.showMessageDialog(jPanel1,"--Product Updated--"+"\nProduct Code: "+ prodID+"\nProduct Name: "+prodname+"\nUnit Price: "+unit+"\nOnhand: "+onhand);
                         showTable();
@@ -422,7 +412,7 @@ public class Products extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_P_saveActionPerformed
-
+//Deletes the product from the database if it is found
     private void P_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_P_deleteActionPerformed
         // TODO add your handling code here:
         POSDAO posDAO1 = new POSDAO();
@@ -448,7 +438,7 @@ public class Products extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_P_exitActionPerformed
-
+    //Clears current screen and displays Home Screen
     private void homebttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebttnActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -470,6 +460,8 @@ public class Products extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshButtonActionPerformed
     public void showTable(){
         try{
+            //Connect to Database
+            //Displays all the products currently in the database
             String query = "select * from products order by ProdName, ProdID";
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             Connection myConn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/pos?" +
@@ -494,13 +486,16 @@ public class Products extends javax.swing.JFrame {
             Logger.getLogger(Products.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //This function was not used, automatically created
     private String autoOderId() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    //Displays table. Called on by another function
+    //This function was not used
     private void showTableData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    //Clears table
     public void clear(){
         txtpid.setText("");
         txtpname.setText("");
@@ -508,27 +503,34 @@ public class Products extends javax.swing.JFrame {
         txtonhand.setText("");
     }
     class checkData extends Thread{
-
+            //checks database for existing product and fills in info into textboxes if the product is found
         public void run(){
             POSDAO posDAO = new POSDAO();
             if(posDAO.openConnection())
             {
+                //Opens database connection
                 try 
                 {
+                    //
                     Products productFind = null;
+                    //If the Product ID textbox is not empty
                     if(!txtpid.getText().isEmpty())
                     {
+                        //Call on the Data Access Object find method
                         productFind = posDAO.findProductRecord(Integer.valueOf(txtpid.getText()));
                         if(productFind!=null)
                         {
+                            //If found, fill in textboxes with the data found.
                             txtpname.setText(productFind.getProdName());
                             txtunitprice.setText(Double.toString(productFind.getUnitPrice()));
                             txtonhand.setText(Integer.toString(productFind.getOnHand()));
                         }
                     }
+                    //If the info is found, update the save button to show 'Update'
                     if(!txtpname.getText().isEmpty()){
                         P_save.setText("Update");
                     }
+                    //if not, data was not found and cannot be updated. The save button is shown
                     else{
                         P_save.setText("Save");
                     }
@@ -580,7 +582,7 @@ public class Products extends javax.swing.JFrame {
     private javax.swing.JButton P_delete;
     private javax.swing.JButton P_exit;
     private javax.swing.JButton P_save;
-    private javax.swing.JButton addButton;
+    private javax.swing.JButton addProduct;
     private javax.swing.JButton homebttn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

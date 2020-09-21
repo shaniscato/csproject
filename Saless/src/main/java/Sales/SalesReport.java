@@ -29,13 +29,16 @@ public class SalesReport extends javax.swing.JFrame {
         
     }
     public void showTables(){
+        //Displays Sales Report Table - gives Date, Line Num of the Invoice, Invoice Num, Product ID, Product Name, Quantity, Subtotal of that Invoice
         try{
             String query = "select salesummary.Date,saledetails.LineNum, saledetails.InvoiceNum, saledetails.ProdID, products.ProdName, saledetails.Qty, saledetails.Subtotal FROM salesummary, saledetails, products where saledetails.InvoiceNum = salesummary.InvoiceNum AND products.ProdID = saledetails.ProdID order by Date";
+            //Connect to database
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             Connection myConn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/pos?" +
                                            "user=root&password=d3rhZj!k");
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             System.out.print(myPreStmt);
+            //Get data and save to result set
             ResultSet rs = myPreStmt.executeQuery();
             DefaultTableModel tm = (DefaultTableModel)jTable1.getModel();
             tm.setRowCount(0);
@@ -162,7 +165,7 @@ public class SalesReport extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void homebttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebttnActionPerformed
         // TODO add your handling code here:
         this.dispose();

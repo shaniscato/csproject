@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  *
  * @author shani
  */
+//Products Data Access Object
 public class POSDAO {
     // private Connection myConn = null;
     Connection myConn = null;
@@ -73,6 +74,7 @@ public class POSDAO {
             System.out.println(ex.getMessage());
         }
     }
+    //Insert Product Record to database
     public void insertProductRecord(Products product) throws SQLException
     {
         String query = "insert into products (ProdID, ProdName, UnitPrice, Stock) values (?,?,?,?)";
@@ -89,6 +91,7 @@ public class POSDAO {
             System.out.println(e.getMessage());
         }
     }
+    //Insert new record to Detailed Sales Record database table
     public void insertSalesRecord(POS sale) throws SQLException
     {
         String query = "insert into saledetails (InvoiceNum, LineNum, ProdID, Qty, Subtotal) values (?,?,?,?,?)";
@@ -108,6 +111,7 @@ public class POSDAO {
             System.out.println(e.getMessage());
         }
     }
+    //Insert new record to Sales Summary database table
     public void insertSalesSummary(POS sale)
     {
         String query = "insert ignore into salesummary (QtySold, TotRevenue) values (?,?)";
@@ -120,6 +124,7 @@ public class POSDAO {
             Logger.getLogger(POSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //Creates a new SalesSummary object
     public POS SaleSummary(){
         POS saleSummary = null;
         String query = "SELECT * FROM pos.salesummary WHERE InvoiceNum=(SELECT max(InvoiceNum) FROM pos.salesummary)"; 
@@ -136,6 +141,7 @@ public class POSDAO {
         }
         return null;
     }
+    //Searches for Products table in Database for product
     public Products findProductRecord(int prodID) throws SQLException{
         Products theOne = null;
         String query = "select * from products where ProdID = ?";
@@ -173,6 +179,7 @@ public class POSDAO {
         }
         return productsList;
     }*/
+    //Searches for Sales Details table in Database for sales record
     public POS findSalesRecord(int InvoiceNum){
         POS theOne = null;
         String query = "select salesummary.Date,saledetails.LineNum, saledetails.InvoiceNum, saledetails.ProdID, products.ProdName, saledetails.Qty, saledetails.Subtotal FROM salesummary, saledetails, products where saledetails.InvoiceNum = salesummary.InvoiceNum AND products.ProdID = saledetails.ProdID;";
@@ -190,6 +197,7 @@ public class POSDAO {
         }
         return theOne;
     }
+    //Updates product data in Products table
     public void updateProductRecord(Products product){
         String query = "update products set ProdName = ?, UnitPrice = ?, Stock = ? where ProdID=?";
         try{
@@ -206,6 +214,7 @@ public class POSDAO {
             System.out.println(e.getMessage());
         }
     }
+    //Updates sales record data in Sales Details
     public void updateSalesRecord(POS sale)
     {
         String query = "update ignore saledetails set InvoiceNum=?, ProdID=?, Qty=?, Subtotal=? where saledetails.InvoiceNum=salesummary.InvoiceNum AND saledetails.LineNum=?";
@@ -222,6 +231,7 @@ public class POSDAO {
             Logger.getLogger(POSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //Updates sales summary data in Sales Details
     public void updateSalesSummary(POS sales)
     {
         String query = "update salesummary set InvoiceNum=?, Date=?,QtySold=?,TotRevenue=?";
@@ -235,6 +245,7 @@ public class POSDAO {
             Logger.getLogger(POSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //Deletes product in products table
     public void deleteProductRecord(int prodID)
     {
         String query = "delete from products where ProdID = ?";
@@ -247,6 +258,7 @@ public class POSDAO {
             Logger.getLogger(POSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //deletes sales record in sales details table
     public void deleteSalesRecord(int InvoiceNum, int LineNum)
     {
         String query = "delete from saledetails where LineNum = ?, InvoiceNum = ?";

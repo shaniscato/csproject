@@ -41,12 +41,14 @@ public class POS extends javax.swing.JFrame {
     double Price;
     double Subtotal;
     double TotRevenue = 0;
+    //Line number for invoice
     int lineCounter = 0;
     
     public POS() {
         initComponents();
         //showTables();
     }
+    //New Sales object
     public POS(int InvoiceNum, int LineNum, int ProdID, int Qty, double Subtotal)
     {
         initComponents();
@@ -57,6 +59,7 @@ public class POS extends javax.swing.JFrame {
         this.Qty = Qty;
         this.Subtotal = Subtotal;
     }
+    //New sales object 
     public POS(int InvoiceNum, String Date, int Qty, double TotRevenue)
     {
         initComponents();
@@ -67,11 +70,15 @@ public class POS extends javax.swing.JFrame {
         this.TotRevenue = TotRevenue;
     }
     public Products getProduct(){
+        //product search starts at null
         Products productFind = null;
+        //Create new data access object (DAO) to access Find functions in POSDAO
         POSDAO posDAO1 = new POSDAO();
         try {
+            //Connect to database
             if(posDAO1.openConnection())
             {
+                //accesses find function in POSDAO and assigns it to the search result
                 productFind = posDAO1.findProductRecord(Integer.valueOf(txtPcode.getText()));
 
                 if(productFind==null){
@@ -87,7 +94,7 @@ public class POS extends javax.swing.JFrame {
         return productFind;
     }
     
-    
+    //Other getters for variables
     java.util.Date getJavaDate(){return date;}
     java.sql.Date getSQLDate(){return sqldate;}
     public int getLineNum(){return LineNum;}
@@ -143,7 +150,7 @@ public class POS extends javax.swing.JFrame {
         lblBalance = new javax.swing.JLabel();
         txtPay = new javax.swing.JTextField();
         txtBalance = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        printBill = new javax.swing.JButton();
         paymentcombo = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtBill = new javax.swing.JTextArea();
@@ -151,7 +158,7 @@ public class POS extends javax.swing.JFrame {
         saleshomebttn = new javax.swing.JButton();
         checkoutBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        salesList = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -303,11 +310,11 @@ public class POS extends javax.swing.JFrame {
 
         txtBalance.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("PRINT BILL");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        printBill.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        printBill.setText("PRINT BILL");
+        printBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                printBillActionPerformed(evt);
             }
         });
 
@@ -325,7 +332,7 @@ public class POS extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(78, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addComponent(printBill)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -360,7 +367,7 @@ public class POS extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(paymentcombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addComponent(jButton1)
+                .addComponent(printBill)
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
@@ -385,7 +392,7 @@ public class POS extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        salesList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -401,7 +408,7 @@ public class POS extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(salesList);
 
         jLabel2.setText("Sale List for Checkout");
 
@@ -454,7 +461,7 @@ public class POS extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    //Balance calculated for Sales Summary bill to be displayed/printed in Sales Screen
     public void Balance()
     {
         double total = Double.valueOf(txtTotal.getText());
@@ -465,16 +472,17 @@ public class POS extends javax.swing.JFrame {
     
     public void bill()
     {
+        //Displays bill in Sales Screen
         String total = txtTotal.getText();
         String pay = txtPay.getText();
         String bal = txtBalance.getText();
         String payment = (String) paymentcombo.getSelectedItem();
-              
+        
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         
         DefaultTableModel model = new DefaultTableModel();
         
-        model = (DefaultTableModel)jTable2.getModel();
+        model = (DefaultTableModel)salesList.getModel();
         
         txtBill.setText(txtBill.getText() + "*********************************************\n");
         txtBill.setText(txtBill.getText() + "*            POS BILL                        *\n");
@@ -486,6 +494,7 @@ public class POS extends javax.swing.JFrame {
         
         for (int i = 0; i < model.getRowCount(); i++)
         {
+            //Assigns each column of each line of the table in the Sales List for Checkout in the Sales Screen
             
             String pname = (String)model.getValueAt(i, 2);
             String quantity = Integer.toString((Integer)model.getValueAt(i, 3));
@@ -514,12 +523,12 @@ public class POS extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtPcodeKeyPressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void printBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBillActionPerformed
         // TODO add your handling code here:
         Balance();
         bill();
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_printBillActionPerformed
 
     private void saleshomebttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleshomebttnActionPerformed
         // TODO add your handling code here:
@@ -536,7 +545,7 @@ public class POS extends javax.swing.JFrame {
     private void txtPcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPcodeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPcodeActionPerformed
-
+    //Sets found product info to textboxes once focus is lost
     private void txtPcodeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPcodeFocusLost
         // TODO add your handling code here:
         txtPname.setText(getProdName());
@@ -554,18 +563,24 @@ public class POS extends javax.swing.JFrame {
         
         try
         {
-            int salesCount = jTable2.getRowCount();
+            int salesCount = salesList.getRowCount();
+            //Creates new data access object to insert sales record
             POSDAO checkoutDAO = new POSDAO();
             if(checkoutDAO.openConnection())
             {
+                //Calls on insertSalesSummary in the POSDAO class, inserts lines into sales summary table, 
+                //0 is placeholder for Invoice Num which the database will generate, "" also placeholder
                 POS salesummary = new POS(0,"",QtySold,TotRevenue);
                 txtTotal.setText(String.format("%.2f",TotRevenue));
+                //insert products for checkout into sales summary table
                 checkoutDAO.insertSalesSummary(salesummary);
                 InvoiceNum = checkoutDAO.SaleSummary().getInvoiceNum();
+                
                 for(int row=0; row<salesCount; row++)
                 {
-                    POS salerecord = new POS(InvoiceNum,(Integer)jTable2.getValueAt(row, 0), (Integer)jTable2.getValueAt(row,1), (Integer)jTable2.getValueAt(row, 3), (Double)jTable2.getValueAt(row, 5));
-                    
+                    //for each row of the sales list in the Sales Screen, create a sales record
+                    POS salerecord = new POS(InvoiceNum,(Integer)salesList.getValueAt(row, 0), (Integer)salesList.getValueAt(row,1), (Integer)salesList.getValueAt(row, 3), (Double)salesList.getValueAt(row, 5));
+                    //Calls on insertSalesRecord in the POSDAO class, inserts lines into sales DETAILS table, 
                     checkoutDAO.insertSalesRecord(salerecord);
                 }
                 
@@ -575,8 +590,9 @@ public class POS extends javax.swing.JFrame {
             Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_checkoutBtnActionPerformed
+    //clears the table on call
     public void clearSalesTable(){
-        DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+        DefaultTableModel model = (DefaultTableModel)salesList.getModel();
         model.addRow(new Object[]
         {
             "",
@@ -588,9 +604,10 @@ public class POS extends javax.swing.JFrame {
             "",
         });
     }
+    //adds line of new sale into sales list for checkout
     private void addLineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLineBtnActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+        DefaultTableModel model = (DefaultTableModel)salesList.getModel();
         lineCounter++;
         TotRevenue = TotRevenue + Double.valueOf(txtSubtotal.getText());
         txtTotal.setText(String.format("%.2f",TotRevenue));
@@ -650,14 +667,12 @@ public class POS extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addLineBtn;
     private javax.swing.JButton checkoutBtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblBalance;
     private javax.swing.JLabel lblPay;
     private javax.swing.JLabel lblPcode;
@@ -667,7 +682,9 @@ public class POS extends javax.swing.JFrame {
     private javax.swing.JLabel lblSubtotal;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JComboBox<String> paymentcombo;
+    private javax.swing.JButton printBill;
     private javax.swing.JSpinner quantity;
+    private javax.swing.JTable salesList;
     private javax.swing.JButton saleshomebttn;
     private javax.swing.JTextField txtBalance;
     private javax.swing.JTextArea txtBill;
